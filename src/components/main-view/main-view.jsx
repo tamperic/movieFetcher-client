@@ -18,11 +18,11 @@ export const MainView = () => {
           id: movie._id
         };
       });
-      console.log("testttt", moviesFromApi);
+      
       setMovies(moviesFromApi); // Update the state of the component
     });
   }, []);
-
+  
   if(selectedMovie) {
     return (
       <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
