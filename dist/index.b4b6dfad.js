@@ -18731,6 +18731,8 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieView = require("../movie-view/movie-view");
 var _movieCard = require("../movie-card/movie-card");
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
@@ -18759,19 +18761,19 @@ const MainView = ()=>{
                     onBackClick: ()=>setSelectedMovie(null)
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 30,
+                    lineNumber: 31,
                     columnNumber: 9
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 31,
+                    lineNumber: 32,
                     columnNumber: 9
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar Movies"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 32,
+                    lineNumber: 33,
                     columnNumber: 9
                 }, undefined),
                 similarMovies.map((movie)=>{
@@ -18780,14 +18782,14 @@ const MainView = ()=>{
                         onMovieClick: (similarMovie)=>setSelectedMovie(similarMovie)
                     }, movie._id, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 34,
+                        lineNumber: 35,
                         columnNumber: 19
                     }, undefined);
                 })
             ]
         }, void 0, true, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 29,
+            lineNumber: 30,
             columnNumber: 7
         }, undefined);
     }
@@ -18795,7 +18797,7 @@ const MainView = ()=>{
         children: "There are no movies!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 41,
+        lineNumber: 42,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -18806,17 +18808,41 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 47,
+                lineNumber: 48,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 45,
+        lineNumber: 46,
         columnNumber: 5
     }, undefined);
 };
 _s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
+// Define all the props constraints for the MainView
+MainView.propTypes = {
+    movie: (0, _propTypesDefault.default).shape({
+        title: (0, _propTypesDefault.default).string.isRequired,
+        description: (0, _propTypesDefault.default).string.isRequired,
+        releaseYear: (0, _propTypesDefault.default).number.isRequired,
+        rating: (0, _propTypesDefault.default).number.isRequired,
+        genre: (0, _propTypesDefault.default).shape({
+            name: (0, _propTypesDefault.default).string.isRequired,
+            description: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
+        director: (0, _propTypesDefault.default).shape({
+            name: (0, _propTypesDefault.default).string.isRequired,
+            bio: (0, _propTypesDefault.default).string.isRequired,
+            birthDate: (0, _propTypesDefault.default).string.isRequired,
+            deathDate: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
+        actors: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string).isRequired,
+        imagePath: (0, _propTypesDefault.default).string.isRequired,
+        duration: (0, _propTypesDefault.default).string.isRequired,
+        featured: (0, _propTypesDefault.default).bool.isRequired
+    }).isRequired,
+    onMovieClick: (0, _propTypesDefault.default).func.isRequired
+};
 var _c;
 $RefreshReg$(_c, "MainView");
 
@@ -18825,7 +18851,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"bwuIu":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","prop-types":"7wKI2"}],"bwuIu":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -18857,23 +18883,23 @@ _c = MovieCard;
 MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
         title: (0, _propTypesDefault.default).string.isRequired,
-        description: (0, _propTypesDefault.default).string,
-        releaseYear: (0, _propTypesDefault.default).number,
-        rating: (0, _propTypesDefault.default).number,
+        description: (0, _propTypesDefault.default).string.isRequired,
+        releaseYear: (0, _propTypesDefault.default).number.isRequired,
+        rating: (0, _propTypesDefault.default).number.isRequired,
         genre: (0, _propTypesDefault.default).shape({
             name: (0, _propTypesDefault.default).string.isRequired,
-            description: (0, _propTypesDefault.default).string
-        }),
+            description: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
         director: (0, _propTypesDefault.default).shape({
             name: (0, _propTypesDefault.default).string.isRequired,
-            bio: (0, _propTypesDefault.default).string,
-            birthDate: (0, _propTypesDefault.default).string,
-            deathDate: (0, _propTypesDefault.default).string
-        }),
-        actors: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string),
-        imagePath: (0, _propTypesDefault.default).string,
-        duration: (0, _propTypesDefault.default).string,
-        featured: (0, _propTypesDefault.default).bool
+            bio: (0, _propTypesDefault.default).string.isRequired,
+            birthDate: (0, _propTypesDefault.default).string.isRequired,
+            deathDate: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
+        actors: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string).isRequired,
+        imagePath: (0, _propTypesDefault.default).string.isRequired,
+        duration: (0, _propTypesDefault.default).string.isRequired,
+        featured: (0, _propTypesDefault.default).bool.isRequired
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
 };
@@ -19889,23 +19915,23 @@ _c = MovieView;
 MovieView.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
         title: (0, _propTypesDefault.default).string.isRequired,
-        description: (0, _propTypesDefault.default).string,
-        releaseYear: (0, _propTypesDefault.default).number,
-        rating: (0, _propTypesDefault.default).number,
+        description: (0, _propTypesDefault.default).string.isRequired,
+        releaseYear: (0, _propTypesDefault.default).number.isRequired,
+        rating: (0, _propTypesDefault.default).number.isRequired,
         genre: (0, _propTypesDefault.default).shape({
             name: (0, _propTypesDefault.default).string.isRequired,
-            description: (0, _propTypesDefault.default).string
-        }),
+            description: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
         director: (0, _propTypesDefault.default).shape({
             name: (0, _propTypesDefault.default).string.isRequired,
-            bio: (0, _propTypesDefault.default).string,
-            birthDate: (0, _propTypesDefault.default).string,
-            deathDate: (0, _propTypesDefault.default).string
-        }),
-        actors: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string),
-        imagePath: (0, _propTypesDefault.default).string,
-        duration: (0, _propTypesDefault.default).string,
-        featured: (0, _propTypesDefault.default).bool
+            bio: (0, _propTypesDefault.default).string.isRequired,
+            birthDate: (0, _propTypesDefault.default).string.isRequired,
+            deathDate: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired,
+        actors: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string).isRequired,
+        imagePath: (0, _propTypesDefault.default).string.isRequired,
+        duration: (0, _propTypesDefault.default).string.isRequired,
+        featured: (0, _propTypesDefault.default).bool.isRequired
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
 };
