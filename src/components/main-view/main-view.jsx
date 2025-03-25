@@ -2,32 +2,45 @@ import React, { useState, useEffect } from "react";
 import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
 import PropTypes from "prop-types";
+import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
-
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(storedUser? storedUser : null);
+  const [token, setToken] = useState(storedToken? storedToken : null);
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
 
   // Synchronize a component with an external system
   useEffect(() => {
-    fetch("https://movie-fetcher-5a8669cd2c54.herokuapp.com/movies")
+    if (!token) return;
+
+    fetch("https://movie-fetcher-5a8669cd2c54.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     .then((response) => response.json())
-    .then((data) => {
-      const moviesFromApi = data.map((movie) => {
-        return {
-          ...movie,
-          id: movie._id
-        };
-      });
-      
-      setMovies(moviesFromApi); // Update the state of the component
+    .then((movies) => {
+      setMovies(movies); // Update the state of the component
     });
-  }, []);
+  }, [token]);
+
+  if (!user) {
+    return (
+      <LoginView 
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
+  }
   
   if(selectedMovie) {
     let similarMovies = movies.filter((movie) => {return movie.genre.name === selectedMovie.genre.name && movie._id !== selectedMovie._id});
     return (
       <div>
+        <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }} >Logout</button>
         <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
         <br />
         <h2>Similar Movies</h2>
