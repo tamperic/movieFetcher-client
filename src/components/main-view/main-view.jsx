@@ -3,6 +3,7 @@ import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
 import PropTypes from "prop-types";
 import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -25,14 +26,19 @@ export const MainView = () => {
     });
   }, [token]);
 
+  // Display LoginView and SignupView, that gives the user the option either to log in or sing up
   if (!user) {
     return (
-      <LoginView 
-        onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }}
-      />
+      <>
+        <LoginView 
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
     );
   }
   
