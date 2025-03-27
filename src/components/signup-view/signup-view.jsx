@@ -12,7 +12,7 @@ const handleSubmit =(event) => {
   const data = {
     username: username,
     password: password,
-    emial: email,
+    email: email,
     birthDate: birthDate
   };
 
