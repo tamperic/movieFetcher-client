@@ -16,7 +16,7 @@ const handleSubmit =(event) => {
     birthDate: birthDate
   };
 
-  fetch("SIGNUP_URL", {
+  fetch("https://movie-fetcher-5a8669cd2c54.herokuapp.com/users", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
