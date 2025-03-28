@@ -1,5 +1,9 @@
-$color: steelblue;
+$primary: DarkSlateBlue;
+$body-bg: Lavender;
+$input-bg: white;
 
-.movie-fetcher {
-  color: $color;
+.Form.Control {
+  background-color: $input-bg;
 }
+
+@import "~bootstrap/scss/bootstrap.scss";

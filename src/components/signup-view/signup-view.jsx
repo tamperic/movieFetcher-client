@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -35,24 +37,50 @@ const handleSubmit =(event) => {
 
   // onSubmit tells the login API to validate username, password, email, and birthDate
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={username} minLength="3" onChange={(e) => setUsername(e.target.value)} required />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      </label>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </label>
-      <label>
-        Date of birth:
-        <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} required />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3 mt-4" controlId="fromUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={username} 
+          minLength="3" 
+          onChange={(e) => setUsername(e.target.value)} 
+          placeholder="Enter your username"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fromPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control 
+          type="password" 
+          value={password}
+          minLength="8"
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Enter your password"
+          required
+        />
+        <Form.Text muted>Your password must contain at least 8 characters.</Form.Text>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fromEmail">
+        <Form.Label>Email address:</Form.Label>
+        <Form.Control 
+          type="email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="Enter your email"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fromBirthDate">
+        <Form.Label>Date of birth:</Form.Label>
+        <Form.Control 
+          type="date" 
+          value={birthDate}
+          onChange={(e) => setBirthDate(e.target.value)} 
+          required
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">Submit</Button>
+    </Form>
   );
 };

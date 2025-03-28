@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export const LoginView = ({onLoggedIn}) => {
   const [username, setUsername] = useState("");
@@ -39,16 +41,30 @@ export const LoginView = ({onLoggedIn}) => {
 
   // onSubmit tells the login API to validate username & password
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={username} minLength="3" onChange={(e) => setUsername(e.target.value)} required />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="fromUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={username} 
+          minLength="3" 
+          onChange={(e) => setUsername(e.target.value)} 
+          placeholder="Enter your username"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" ontrolId="fromPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control 
+          type="password" 
+          value={password}
+          minLength="8"
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Enter your password"
+          required
+        />
+      </Form.Group>
+      <Button variant="primary" className="mb-4" type="submit">Submit</Button>
+    </Form>
   )
 };
