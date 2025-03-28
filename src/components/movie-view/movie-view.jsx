@@ -1,45 +1,48 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { Button, Card } from "react-bootstrap";
+
+import "./movie-view.scss";
 
 export const MovieView = ({movie, onBackClick}) => {
   return (
     <div>
       <div>
-        <img src={movie.imagePath} />
+        <img className='w-100' src={movie.imagePath} />
       </div>
       <div>
-        <h2>Title: </h2>
+        <h1>Title: </h1>
         <p>{movie.title}</p>
       </div>
       <div>
-        <h2>Description: </h2>
+        <h3>Description: </h3>
         <p>{movie.description}</p>
       </div>
       <div>
-        <h2>Genre: </h2>
+        <h3>Genre: </h3>
         <p>{movie.genre.name}</p>
       </div>
       <div>
-        <h2>Director: </h2>
+        <h3>Director: </h3>
         <p>{movie.director.name}</p>
       </div>
       <div>
-        <h2>Rating: </h2>
+        <h3>Rating: </h3>
         <p>{movie.rating}</p>
       </div>
       <div>
-        <h2>Year of release: </h2>
+        <h3>Year of release: </h3>
         <p>{movie.releaseYear}</p>
       </div>
       <div>
-        <h2>Duration: </h2>
+        <h3>Duration: </h3>
         <p>{movie.duration}</p>
       </div>
       <div>
-        <h2>Actors: </h2>
+        <h3>Actors: </h3>
         <p>{movie.actors}</p>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <Button onClick={onBackClick} className='back-button' style={{ cursor: "pointer" }}>Back</Button>
     </div>
   );
 };
