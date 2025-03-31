@@ -31,6 +31,14 @@ export const MainView = () => {
     });
   }, [token]);
 
+  const similarMovies = selectedMovie 
+    ? movies.filter((movie) => {
+      return (
+        movie.genre.name === selectedMovie.genre.name && 
+        movie._id !== selectedMovie._id
+      );
+    }) : []; // If selectedMovie is null, return an empty array
+
   return (
     <Row className="justify-content-md-center">
       {!user ? (
@@ -49,28 +57,30 @@ export const MainView = () => {
             <Button variant="primary" onClick={() => { setUser(null); setToken(null); localStorage.clear(); }} >Logout</Button>
             <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
             <br />
-            <h2>Similar Movies</h2>
-            {movies.filter((movie) => 
-              movie.genre.name === selectedMovie.genre.name && movie._id !== selectedMovie._id
-            ).map((movie) => (
-              <Col>
-                <MovieCard movie={movie} key={movie._id} onMovieClick={(similarMovie) => setSelectedMovie(similarMovie)} />
-              </Col>
-            ))
-            }
-            {/* let similarMovies = movies.filter((movie) => {return movie.genre.name === selectedMovie.genre.name && movie._id !== selectedMovie._id});
-            {similarMovies.map((movie) => {
-              return (<MovieCard movie={movie} key={movie._id} onMovieClick={(similarMovie) => setSelectedMovie(similarMovie)} />)
-            })} */}
-         </Col>
+            <h2>Similar Movies:</h2>
+            {similarMovies.length === 0 ? (
+              <p>There are no similar movies.</p>
+            ) : (
+              <Row>
+                {similarMovies.map((movie) => (
+                  <Col key={movie._id}>
+                    <MovieCard 
+                      movie={movie} 
+                      onMovieClick={(similarMovie) => {
+                        setSelectedMovie(similarMovie);}} 
+                    />
+                  </Col>
+                ))}
+              </Row>
+            )}
+          </Col>
         ) : movies.length === 0 ? (
           <div>There are no movies!</div>
         ) : (
-          <>
+          <Row>
             {movies.map((movie) => (
-              <Col className="mb-5" key={movie.id} md={3}>
+              <Col key={movie._id} className="mb-4" md={4} xs={12} sm={6} lg={3}>
                 <MovieCard
-                  key={movie.id}
                   movie={movie}
                   onMovieClick={(newSelectedMovie) => {
                     setSelectedMovie(newSelectedMovie);
@@ -78,33 +88,9 @@ export const MainView = () => {
                 />
               </Col>
             ))}
-          </>
+          </Row>
         )
       }
     </Row>
   );
-
-// Define all the props constraints for the MainView
-MainView.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    releaseYear: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
-    }).isRequired,
-    director: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      bio: PropTypes.string.isRequired,
-      birthDate: PropTypes.string.isRequired,
-      deathDate: PropTypes.string.isRequired
-    }).isRequired,
-    actors: PropTypes.arrayOf(PropTypes.string).isRequired,
-    imagePath: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
-    featured: PropTypes.bool.isRequired
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
 };
