@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
-import PropTypes from "prop-types";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
@@ -84,7 +83,6 @@ export const MainView = () => {
       }
     </Row>
   );
-};
 
 // Define all the props constraints for the MainView
 MainView.propTypes = {
