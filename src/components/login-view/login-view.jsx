@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -31,7 +32,7 @@ export const LoginView = ({onLoggedIn}) => {
         localStorage.setItem("token", data.token);
         onLoggedIn(data.user, data.token);
       } else {
-        alert("No such user.");
+        alert("User not found.");
       }
     })
     .catch((e) => {
@@ -42,7 +43,7 @@ export const LoginView = ({onLoggedIn}) => {
   // onSubmit tells the login API to validate username & password
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="fromUsername">
+      <Form.Group className="mb-3" controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control 
           type="text" 
@@ -53,7 +54,7 @@ export const LoginView = ({onLoggedIn}) => {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-3" ontrolId="fromPassword">
+      <Form.Group className="mb-3" controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control 
           type="password" 
@@ -67,4 +68,8 @@ export const LoginView = ({onLoggedIn}) => {
       <Button variant="primary" className="mb-4" type="submit">Submit</Button>
     </Form>
   )
+};
+
+LoginView.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
 };
