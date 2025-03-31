@@ -38,7 +38,7 @@ const handleSubmit =(event) => {
   // onSubmit tells the login API to validate username, password, email, and birthDate
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3 mt-4" controlId="fromUsername">
+      <Form.Group className="mb-3 mt-4" controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control 
           type="text" 
@@ -49,7 +49,7 @@ const handleSubmit =(event) => {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="fromPassword">
+      <Form.Group className="mb-3" controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control 
           type="password" 
@@ -61,7 +61,7 @@ const handleSubmit =(event) => {
         />
         <Form.Text muted>Your password must contain at least 8 characters.</Form.Text>
       </Form.Group>
-      <Form.Group className="mb-3" controlId="fromEmail">
+      <Form.Group className="mb-3" controlId="formEmail">
         <Form.Label>Email address:</Form.Label>
         <Form.Control 
           type="email" 
@@ -71,7 +71,7 @@ const handleSubmit =(event) => {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="fromBirthDate">
+      <Form.Group className="mb-3" controlId="formBirthDate">
         <Form.Label>Date of birth:</Form.Label>
         <Form.Control 
           type="date" 
