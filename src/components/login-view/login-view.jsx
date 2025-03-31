@@ -64,6 +64,7 @@ export const LoginView = ({onLoggedIn}) => {
           placeholder="Enter your password"
           required
         />
+        <Form.Text muted>Your password must contain at least 8 characters.</Form.Text>
       </Form.Group>
       <Button variant="primary" className="mb-4" type="submit">Submit</Button>
     </Form>
