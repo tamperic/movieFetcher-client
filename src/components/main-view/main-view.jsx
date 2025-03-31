@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
-import PropTypes from "prop-types";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -29,77 +31,66 @@ export const MainView = () => {
     });
   }, [token]);
 
-  // Display LoginView and SignupView, that gives the user the option either to log in or sing up
-  if (!user) {
-    return (
-      <>
-        <LoginView 
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or
-        <SignupView />
-      </>
-    );
-  }
-  
-  if(selectedMovie) {
-    let similarMovies = movies.filter((movie) => {return movie.genre.name === selectedMovie.genre.name && movie._id !== selectedMovie._id});
-    return (
-      <div>
-        <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }} >Logout</button>
-        <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-        <br />
-        <h2>Similar Movies</h2>
-        {similarMovies.map((movie) => {
-          return (<MovieCard movie={movie} key={movie._id} onMovieClick={(similarMovie) => setSelectedMovie(similarMovie)} />)
-        })}
-      </div>
-    );
-  }
-
-  if(movies.length === 0) {
-    return <div>There are no movies!</div>;
-  }
+  const similarMovies = selectedMovie 
+    ? movies.filter((movie) => {
+      return (
+        movie.genre.name === selectedMovie.genre.name && 
+        movie._id !== selectedMovie._id
+      );
+    }) : []; // If selectedMovie is null, return an empty array
 
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
-        />
-      ))}
-    </div>
+    <Row className="justify-content-md-center">
+      {!user ? (
+        <Col className="mt-5" md={5}>
+          <LoginView 
+            onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+            }}
+          />
+          or
+          <SignupView />
+        </Col>
+        ) : selectedMovie ? (
+          <Col md={6}>
+            <Button variant="primary" onClick={() => { setUser(null); setToken(null); localStorage.clear(); }} >Logout</Button>
+            <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+            <br />
+            <h2>Similar Movies:</h2>
+            {similarMovies.length === 0 ? (
+              <p>There are no similar movies.</p>
+            ) : (
+              <Row>
+                {similarMovies.map((movie) => (
+                  <Col key={movie._id}>
+                    <MovieCard 
+                      movie={movie} 
+                      onMovieClick={(similarMovie) => {
+                        setSelectedMovie(similarMovie);}} 
+                    />
+                  </Col>
+                ))}
+              </Row>
+            )}
+          </Col>
+        ) : movies.length === 0 ? (
+          <div>There are no movies!</div>
+        ) : (
+          <Row>
+            {movies.map((movie) => (
+              <Col key={movie._id} className="mb-4" md={4} xs={12} sm={6} lg={3}>
+                <MovieCard
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+                />
+              </Col>
+            ))}
+          </Row>
+        )
+      }
+    </Row>
   );
-};
-
-// Define all the props constraints for the MainView
-MainView.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    releaseYear: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
-    }).isRequired,
-    director: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      bio: PropTypes.string.isRequired,
-      birthDate: PropTypes.string.isRequired,
-      deathDate: PropTypes.string.isRequired
-    }).isRequired,
-    actors: PropTypes.arrayOf(PropTypes.string).isRequired,
-    imagePath: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
-    featured: PropTypes.bool.isRequired
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
 };
