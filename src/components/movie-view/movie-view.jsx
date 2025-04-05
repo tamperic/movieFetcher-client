@@ -1,4 +1,5 @@
 import React from 'react';
+import React, { useState , useEffect} from 'react';
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -12,6 +13,28 @@ export const MovieView = ({movie}) => {
   const movie = movies.find((m) => m.id === movieId);
   const [ isFavorite, setIsFavorite ] = useState(false);
   const [ similarMovies, setSimilarMovies ] = useState([]);
+
+
+  // Fetch movies by title
+  useEffect(() => {
+    if (!token) return;  // If no token is available, don't proceed with the fetch
+    console.log(movieTitle);
+
+    fetch(`https://movie-fetcher-5a8669cd2c54.herokuapp.com/movies/${movieTitle}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((response) => response.json())
+    .then((resMovie) => {
+      setMovie(resMovie);
+      setIsFavorite(user.favoriteMovies.includes(resMovie._id));
+      setSimilarMovies(movies.filter((m) =>
+        m.genre.name === resMovie.genre.name && 
+        resMovie._id !== m._id)
+      );
+    
+    });
+  }, [movieTitle, token]);
+
 
   // Handle favorite movie toggle
   const toggleFavoriteMovie = (movieId) => {
