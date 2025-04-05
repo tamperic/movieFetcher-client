@@ -1,16 +1,15 @@
-import React from 'react';
 import React, { useState , useEffect} from 'react';
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 import { MovieCard } from '../movie-card/movie-card';
 
 import "./movie-view.scss";
 
-export const MovieView = ({movie}) => {
-  const { movieId } = useParams();
-  const movie = movies.find((m) => m.id === movieId);
+export const MovieView = ({ movies, user, token, setUser }) => {
+  const { movieTitle } = useParams();
+  const [ movie, setMovie ] = useState(null);
   const [ isFavorite, setIsFavorite ] = useState(false);
   const [ similarMovies, setSimilarMovies ] = useState([]);
 
@@ -60,47 +59,51 @@ export const MovieView = ({movie}) => {
 
 
   return (
-    <div>
-      <div>
-        <img className='w-100' src={movie.imagePath} />
-      </div>
-      <div>
-        <h1>Title: </h1>
-        <p>{movie.title}</p>
-      </div>
-      <div>
-        <h3>Description: </h3>
-        <p>{movie.description}</p>
-      </div>
-      <div>
-        <h3>Genre: </h3>
-        <p>{movie.genre.name}</p>
-      </div>
-      <div>
-        <h3>Director: </h3>
-        <p>{movie.director.name}</p>
-      </div>
-      <div>
-        <h3>Rating: </h3>
-        <p>{movie.rating}</p>
-      </div>
-      <div>
-        <h3>Year of release: </h3>
-        <p>{movie.releaseYear}</p>
-      </div>
-      <div>
-        <h3>Duration: </h3>
-        <p>{movie.duration}</p>
-      </div>
-      <div>
-        <h3>Actors: </h3>
-        <p>{movie.actors}</p>
-      </div>
-      <Link to={`/`}>
-        <Button className="back-button" style={{ cursor: "pointer" }}>Back</Button>
-      </Link>
-    </div>
+    <Row>
+      <Row>
+      <Col xs={6} md={4}>
+        <div>
+          <img className='w-100' src={movie?.imagePath} />
+        </div>
+      </Col>
+      <Col xs={12} md={8}>
+        <div>
+          <h1>{movie?.title}</h1>
+        </div>
+        <div>
+          <h4>Description: </h4>
+          <p>{movie?.description}</p>
+        </div>
+        <div>
+          <h4>Genre: </h4>
+          <p>{movie?.genre?.name}</p>
+        </div>
+        <div>
+          <h3>Director: </h3>
+          <p>{movie?.director?.name}</p>
+        </div>
+        <div>
+          <h4>Rating: </h4>
+          <p>{movie?.rating}</p>
+        </div>
+        <div>
+          <h4>Year of release: </h4>
+          <p>{movie?.releaseYear}</p>
+        </div>
+        <div>
+          <h4>Duration: </h4>
+          <p>{movie?.duration}</p>
+        </div>
+        <div>
+          <h4>Actors: </h4>
+          <p>{movie?.actors}</p>
+        </div>
+        <Link to={`/`}>
+          <Button className="back-button">Back</Button>
+        </Link>
         <Button variant={isFavorite ? "danger" : "primary"} onClick={() => toggleFavoriteMovie(movie._id)}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Button>
+      </Col>
+      </Row>
       <Col md={6}>
         <h2>Similar movies: </h2>
         {similarMovies.length === 0 ? (
@@ -117,6 +120,7 @@ export const MovieView = ({movie}) => {
             </Row>
           )}
       </Col>
+    </Row>
   );
 };
 
