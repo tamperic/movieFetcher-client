@@ -9,6 +9,30 @@ import "./movie-view.scss";
 export const MovieView = ({movie}) => {
   const { movieId } = useParams();
   const movie = movies.find((m) => m.id === movieId);
+  const [ isFavorite, setIsFavorite ] = useState(false);
+
+  // Handle favorite movie toggle
+  const toggleFavoriteMovie = (movieId) => {
+    fetch(
+      `https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${user.username}/movies/${movieId}`,
+      {
+        method: isFavorite ? "DELETE" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    )
+    .then((response) => response.json())
+    .then((updatedUser) => {
+      setIsFavorite((prev) => !prev);
+      // Once the request is successful, update the user object in the local state
+      setUser({ ...updatedUser, favoriteMovies: updatedUser.favoriteMovies });
+    }).catch((error) => {
+      console.log("Updating the list of favorites failed:", error);
+      alert(error.message); // Alert the user if there is an error
+    });
+  };
+
 
   return (
     <div>
@@ -51,6 +75,7 @@ export const MovieView = ({movie}) => {
         <Button className="back-button" style={{ cursor: "pointer" }}>Back</Button>
       </Link>
     </div>
+        <Button variant={isFavorite ? "danger" : "primary"} onClick={() => toggleFavoriteMovie(movie._id)}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Button>
   );
 };
 
