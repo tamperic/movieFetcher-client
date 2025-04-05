@@ -75,5 +75,10 @@ export const LoginView = ({onLoggedIn}) => {
 };
 
 LoginView.propTypes = {
-  onLoggedIn: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    birthDate: PropTypes.instanceOf(Date),
+  }).isRequired
 };
