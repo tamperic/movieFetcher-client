@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
+import { MovieCard } from '../movie-card/movie-card';
 
 import "./movie-view.scss";
 
@@ -10,6 +11,7 @@ export const MovieView = ({movie}) => {
   const { movieId } = useParams();
   const movie = movies.find((m) => m.id === movieId);
   const [ isFavorite, setIsFavorite ] = useState(false);
+  const [ similarMovies, setSimilarMovies ] = useState([]);
 
   // Handle favorite movie toggle
   const toggleFavoriteMovie = (movieId) => {
@@ -76,6 +78,22 @@ export const MovieView = ({movie}) => {
       </Link>
     </div>
         <Button variant={isFavorite ? "danger" : "primary"} onClick={() => toggleFavoriteMovie(movie._id)}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Button>
+      <Col md={6}>
+        <h2>Similar movies: </h2>
+        {similarMovies.length === 0 ? (
+            <p>There are no similar movies.</p>
+          ) : (
+            <Row>
+              {similarMovies.map((similarMovie) => (
+                <Col key={similarMovie._id}>
+                  <MovieCard 
+                    movie={similarMovie}
+                  />
+                </Col>
+              ))}
+            </Row>
+          )}
+      </Col>
   );
 };
 
