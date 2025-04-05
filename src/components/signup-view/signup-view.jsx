@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import PropTypes from 'prop-types';
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -83,4 +84,11 @@ const handleSubmit =(event) => {
       <Button variant="primary" type="submit">Submit</Button>
     </Form>
   );
+SignupView.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    birthDate: PropTypes.instanceOf(Date),
+  }).isRequired
 };
