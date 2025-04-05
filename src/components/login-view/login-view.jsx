@@ -53,6 +53,9 @@ export const LoginView = ({onLoggedIn}) => {
           placeholder="Enter your username"
           required
         />
+        <Form.Text muted>
+          Your username must contain at least 5 characters.
+        </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formPassword">
         <Form.Label>Password:</Form.Label>
