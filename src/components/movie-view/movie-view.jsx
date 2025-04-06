@@ -59,67 +59,73 @@ export const MovieView = ({ movies, user, token, setUser }) => {
 
 
   return (
-    <Row>
-      <Row>
-      <Col xs={6} md={4}>
-        <div>
-          <img className='w-100' src={movie?.imagePath} />
-        </div>
-      </Col>
-      <Col xs={12} md={8}>
-        <div>
-          <h1>{movie?.title}</h1>
-        </div>
-        <div>
-          <h4>Description: </h4>
-          <p>{movie?.description}</p>
-        </div>
-        <div>
-          <h4>Genre: </h4>
-          <p>{movie?.genre?.name}</p>
-        </div>
-        <div>
-          <h3>Director: </h3>
-          <p>{movie?.director?.name}</p>
-        </div>
-        <div>
-          <h4>Rating: </h4>
-          <p>{movie?.rating}</p>
-        </div>
-        <div>
-          <h4>Year of release: </h4>
-          <p>{movie?.releaseYear}</p>
-        </div>
-        <div>
-          <h4>Duration: </h4>
-          <p>{movie?.duration}</p>
-        </div>
-        <div>
-          <h4>Actors: </h4>
-          <p>{movie?.actors}</p>
-        </div>
-        <Link to={`/`}>
-          <Button className="back-button">Back</Button>
-        </Link>
-        <Button variant={isFavorite ? "danger" : "primary"} onClick={() => toggleFavoriteMovie(movie._id)}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Button>
-      </Col>
+    <Row className='movie-view-container'>
+      <Row className='movie-details mt-5 mb-5'>
+        <Row>
+          <div>
+            <img className='movie-img mb-4' src={movie?.imagePath} />
+          </div>
+        </Row>
+        <Row>
+          <div className='mb-4'>
+            <h1>{movie?.title}</h1>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Description: </strong></span>
+            <span>{movie?.description}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Genre: </strong></span>
+            <span>{movie?.genre?.name}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Director: </strong></span>
+            <span>{movie?.director?.name}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Rating: </strong></span>
+            <span>{movie?.rating}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Year of release: </strong></span>
+            <span>{movie?.releaseYear}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Duration: </strong></span>
+            <span>{movie?.duration}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Actors: </strong></span>
+            <span>{movie?.actors}</span>
+          </div>
+          <div>
+            <Link to={`/`}>
+              <Button className="back-btn">Back</Button>
+            </Link>
+            <Button className="fav-movie-btn" variant={isFavorite ? "isFav" : "notFav"} onClick={() => toggleFavoriteMovie(movie._id)}>{
+              isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            </Button>
+          </div>
+        </Row>
       </Row>
-      <Col md={6}>
-        <h2>Similar movies: </h2>
-        {similarMovies.length === 0 ? (
-            <p>There are no similar movies.</p>
-          ) : (
-            <Row>
-              {similarMovies.map((similarMovie) => (
-                <Col key={similarMovie._id}>
-                  <MovieCard 
-                    movie={similarMovie}
-                  />
-                </Col>
-              ))}
-            </Row>
-          )}
-      </Col>
+      <hr />
+      <Row className='similar-movies mt-5 mb-5 d-flex justify-content-center align-items-center'>
+        <Col md={6}>
+          <h2 className='mb-3'>Similar movies</h2>
+          <p className='mb-5'><em>Looking for more movies like this? ✨<br/> Explore similar titles by genre and discover your next favorite! 🚀</em></p>
+          {similarMovies.length === 0 ? (
+              <p>(There are no similar movies.)</p>
+            ) : (
+              <Row className="d-flex justify-content-center">
+                {similarMovies.map((similarMovie) => (
+                  <Col key={similarMovie._id} md={8}>
+                    <MovieCard movie={similarMovie} />
+                  </Col>
+                ))}
+              </Row>
+            )}
+        </Col>
+      </Row>
     </Row>
   );
 };

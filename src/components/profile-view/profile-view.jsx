@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
-import { Link } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
+
+import "./profile-view.scss";
 
 export const ProfileView = ({ user, token , setUser, movies }) => {
   const [IsEditing, setIsEditing] = useState(false);
@@ -11,8 +12,6 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
   const [ favoriteMovies, setFavoriteMovies ] = useState([]);
   const navigate = useNavigate();
   const { username } = useParams();
-
- 
   
 
   // Handle input changes
@@ -107,39 +106,37 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
 
 
   return (
-    <Row>
-      <h3>My profile</h3>
+    <Row className="main mb-5 mt-5">
+      <h1 className="mb-5">My profile</h1>
       {!IsEditing ? (
         <Col>
-          <Col>
-            <div>
+          <Col className="mb-5">
+            <div className="mb-4">
               <h4>Username:</h4>
               <p>{userForm.username}</p>
             </div>
-            <div>
+            <div className="mb-4">
               <h4>Email address:</h4>
               <p>{userForm.email}</p>
             </div>
-            <div>
+            <div className="mb-5">
               <h4>Date of birth:</h4>
               <p>{userForm.birthDate}</p>
             </div>
-            <Button variant="secondary" onClick={() => setIsEditing(true)}>Edit profile</Button>
-          <Button variant="danger" onClick={handleDeleteAccount}>
-            Delete account
-          </Button>
+            <Button className="me-4" variant="secondary" onClick={() => setIsEditing(true)}>Edit profile</Button>
+            <Button variant="danger" onClick={handleDeleteAccount}>Delete account</Button>
           </Col>
+          <hr className="mb-5" />
           <Col>
-            <h3>Your favorite movies:</h3>
+            <h3 className="mb-5">Your favorite movies</h3>
             <Row>
               {favoriteMovies.length === 0 ? (
                 <p>You still don't have favorite movies.</p>
                 ) : (
                   favoriteMovies?.map((movie) => (
-                      <MovieCard
-                        key={movie._id}
-                        movie={movie}
-                      />
+                    <Col className="mb-5" md={6} key={movie._id}>
+                      <MovieCard movie={movie} />
+                    </Col>
                   ))
                 )
               }
@@ -147,7 +144,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
           </Col>
         </Col>
       ) : (
-        <Col>
+        <Col className="form-update">
           <Form onSubmit={handleUpdateProfile}>
             <h3 className="mb-4">Edit your profile</h3>
             <Form.Group className="mb-3 mt-4" controlId="formUsername">
@@ -160,9 +157,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
                 placeholder="Enter your new username"
                 required
               />
-              <Form.Text muted>
-                Your username must contain at least 5 characters.
-              </Form.Text>
+              <Form.Text>Your username must contain at least 5 characters.</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formPassword">
               <Form.Label>Password:</Form.Label>
@@ -175,9 +170,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
                 placeholder="Enter your new password"
                 required
               />
-              <Form.Text muted>
-                Your password must contain at least 8 characters.
-              </Form.Text>
+              <Form.Text>Your password must contain at least 8 characters.</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formEmail">
               <Form.Label>Email address:</Form.Label>
@@ -190,7 +183,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBirthDate">
+            <Form.Group className="mb-5" controlId="formBirthDate">
               <Form.Label>Date of birth:</Form.Label>
               <Form.Control
                 type="date"
@@ -200,12 +193,8 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Save changes
-            </Button>
-            <Button variant="secondary" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
+            <Button className="save-btn me-4" variant="primary" type="submit">Save changes</Button>
+            <Button variant="secondary" onClick={() => setIsEditing(false)}>Cancel</Button>
           </Form>
         </Col>
       )}

@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Card } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+
 
 export const MovieCard = ({ user, setUser, movie, token }) => {
   const isFavorite = user?.favoriteMovies?.includes(movie._id); // Check if movie is in the favorites list
@@ -29,19 +31,28 @@ export const MovieCard = ({ user, setUser, movie, token }) => {
       alert(error.message); // Alert the user if there is an error
     });
   };
+
   
   return (
     <Card className="h-100">
-      <Card.Img variant="top" style={{ height: '70%' }} src={movie?.imagePath} alt={movie?.title} />
-      <Card.Body>
+      <Card.Img variant="top" style={{ height: '300px', objectFit: 'cover' }} src={movie?.imagePath} alt={movie?.title} />
+      <Card.Body className="d-flex flex-column">
         <Card.Title>
-          <h2>{movie?.title}</h2>
+          <h4>{movie?.title}</h4>
           </Card.Title>
-        <Card.Text>Directed by {movie?.director?.name}</Card.Text>
-        <Button variant={isFavorite ? "danger" : "primary"} onClick={() => toggleFavoriteMovie(movie._id)}>{isFavorite ? "Remove from Favorites" : "Add to Favorites"}</Button>
-        <Link to={`/movies/${encodeURIComponent(movie?.title)}`}>
-          <Button variant="primary" style={{ width: "100%", textAlign: "center", padding: "10px" }}>Open</Button>
-        </Link>
+        <Card.Text className="mb-4 text-muted">Directed by {movie?.director?.name}</Card.Text>
+        <div className="mt-auto">
+          <div className="d-flex justify-content-end mb-2 mt-auto">
+            <Button className="fav-movie-btn" size="sm" variant={isFavorite ? "isFav" : "notFav"} onClick={() => toggleFavoriteMovie(movie._id)}>
+              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            </Button>
+          </div>
+          <div className="mt-auto">
+            <Link to={`/movies/${encodeURIComponent(movie?.title)}`}>
+              <Button variant="primary" className="open-btn">Open</Button>
+            </Link>
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );

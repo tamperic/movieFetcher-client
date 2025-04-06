@@ -18,7 +18,6 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken? storedToken : null);
 
   const [movies, setMovies] = useState([]);
-  // const [selectedMovie, setSelectedMovie] = useState(null);
 
   // Fetch movies
   useEffect(() => {
@@ -92,7 +91,7 @@ export const MainView = () => {
                 {!storedUser ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <Col md={5}>
+                  <Col md={6}>
                     <ProfileView user={user} movies={movies} token={storedToken} setUser={setUser}
                     />
                   </Col>
@@ -126,11 +125,18 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
-                      <Col className="mb-5" key={movie._id} md={3}>
-                        <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
-                      </Col>
-                    ))}
+                    <Row className="welcome-message">
+                      <h1 className="h1 mb-5" >Welcome to MovieFetcher! 🎬</h1>
+                      <p>We are happy to have you on board. Feel free to discover hidden gems!</p>
+                      <p>Happy exploring and enjoy the show! 🍿✨</p>
+                    </Row>
+                    <Row>
+                      {movies.map((movie) => (
+                        <Col className="mb-5" key={movie._id} md={3}>
+                          <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
+                        </Col>
+                      ))}
+                    </Row>
                   </>
                 )}
               </>

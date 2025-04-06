@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar expand="lg" className="w-100 mb-4">
       <Container>
         <Navbar.Brand as={Link} to="/">
           MovieFetcher
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" variant="pills">
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">
