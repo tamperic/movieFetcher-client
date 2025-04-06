@@ -1,7 +1,39 @@
-.back-button {
-  padding: 6px 14px 6px 14px;
-  color: whitesmoke;
-  background-color: DarkSlateBlue;
-  border: none;
-  border-radius: 4px;
+@import "../../index.scss";
+
+.movie-view-container {
+  margin-top: 50px;
+}
+
+.movie-details {
+  .fav-movie-btn {
+    padding: 6px 18px;
+  }
+}
+
+.movie-img {
+  height: 400px;
+  width: auto;
+  object-fit: contain;
+  align-items: center;
+  box-shadow: 0 0 3rem 0.2rem  rgba($black, 0.55);
+}
+
+span {
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  strong {
+    font-size: 20px;
+  }
+}
+
+.back-btn {
+  color: $text-color-light !important;
+  padding: 8px 20px !important;
+  margin: 10px 20px;
+  background-color: #2d2757 !important;
+}
+
+
+.similar-movies {
+  text-align: center;
 }
