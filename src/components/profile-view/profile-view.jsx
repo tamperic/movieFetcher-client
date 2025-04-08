@@ -7,8 +7,8 @@ import { useNavigate, useParams } from "react-router";
 import "./profile-view.scss";
 
 export const ProfileView = ({ user, token , setUser, movies }) => {
-  const [IsEditing, setIsEditing] = useState(false);
-  const [ userForm, setUserForm] = useState({});
+  const [ IsEditing, setIsEditing ] = useState(false);
+  const [ userForm, setUserForm ] = useState(user || {}); // If the user is truthy (exists), if it's falsy (null or undefined) then it deafults to an empty object {}.
   const [ favoriteMovies, setFavoriteMovies ] = useState([]);
   const navigate = useNavigate();
   const { username } = useParams();
@@ -23,12 +23,9 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
     });
   };
 
-
   // Fetching user's data
   useEffect(() => {
-    if (!token) return; // If no token is available, don't proceed with the fetch
-
-    console.log(user);
+    if (!user || !movies?.length || !token) return; // If no token, user or movie is available, don't proceed with the fetch
 
     fetch(`https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -36,8 +33,8 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       .then((response) => response.json())
       .then((user) => {
         if (user) {
-          setUserForm(user); // Update the state of the component
-          let filteredFavoriteMovies = movies.filter(m => user.favoriteMovies.includes(m._id));
+          setUserForm(user); // Update the state of the user
+          let filteredFavoriteMovies = movies.filter(m => user.favoriteMovies?.includes(m._id));
           setFavoriteMovies(filteredFavoriteMovies);
         } else {
           alert("User not found.");
@@ -45,11 +42,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       }).catch((error) => {
         console.log("Fetching user data failed: ", error);
       });
-  }, [token, user]);
-
-
-
-
+  }, [token, user, movies]);
 
 
   // Handle profile edit/update
@@ -65,8 +58,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       },
     })
       .then((response) => response.json())
-      .then((response) => {
-        console.log('Response Status:', response); // Log the response status
+      .then(() => {
         alert("You have successfully edited your profile!");
         localStorage.setItem("user", JSON.stringify(user));
       })
@@ -104,6 +96,9 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
     };
   }
 
+  if (!user || !userForm?.username) {
+    return <p>Loading profile...</p>;
+  } // Avoid error if the data isn't ready, before rendering the profile
 
   return (
     <Row className="main mb-5 mt-5">
