@@ -14,10 +14,9 @@ export const MovieView = ({ movies, user, token, setUser }) => {
   const [ similarMovies, setSimilarMovies ] = useState([]);
 
 
-  // Fetch movies by title
+  // Fetch movies by title, handle similar movies
   useEffect(() => {
     if (!token) return;  // If no token is available, don't proceed with the fetch
-    console.log(movieTitle);
 
     fetch(`https://movie-fetcher-5a8669cd2c54.herokuapp.com/movies/${movieTitle}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -30,15 +29,15 @@ export const MovieView = ({ movies, user, token, setUser }) => {
         m.genre.name === resMovie.genre.name && 
         resMovie._id !== m._id)
       );
-    
     });
   }, [movieTitle, token]);
 
 
   // Handle favorite movie toggle
   const toggleFavoriteMovie = (movieId) => {
+
     fetch(
-      `https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${user.username}/movies/${movieId}`,
+      `https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${user?.username}/movies/${movieId}`,
       {
         method: isFavorite ? "DELETE" : "POST",
         headers: {
@@ -49,8 +48,8 @@ export const MovieView = ({ movies, user, token, setUser }) => {
     .then((response) => response.json())
     .then((updatedUser) => {
       setIsFavorite((prev) => !prev);
-      // Once the request is successful, update the user object in the local state
-      setUser({ ...updatedUser, favoriteMovies: updatedUser.favoriteMovies });
+      setUser({ ...updatedUser, favoriteMovies: updatedUser.favoriteMovies }); // Once the request is successful, update the user object in the local state
+      localStorage.setItem("user", JSON.stringify(updatedUser));
     }).catch((error) => {
       console.log("Updating the list of favorites failed:", error);
       alert(error.message); // Alert the user if there is an error
