@@ -39,9 +39,9 @@ export const MovieCard = ({ user, setUser, movie, token }) => {
       
       const updatedFavorites = updatedUser.favoriteMovies; 
       setFavoriteMovies(updatedFavorites); // Update the favorites in local state
-      localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));  // Update the user in localStorage as well
+      // localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));  // Update the user in localStorage as well
       setUser({ ...updatedUser, favoriteMovies: updatedFavorites }); // Update the user object in the parent component
-
+      localStorage.setItem("user", JSON.stringify(user));
     }).catch((error) => {
       console.log("Updating the list of favorites failed:", error);
       alert(error.message); // Alert the user if there is an error
