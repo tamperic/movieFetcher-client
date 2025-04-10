@@ -3,17 +3,15 @@ import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import { NavigationBar } from "../navigation-bar/navigation-bar";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProfileView } from "../profile-view/profile-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { Container, Col, Row } from "react-bootstrap";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   
-  // when reload the page, the user and token woll be initilized with whatever is in localStorage. If it's empty, both will be initilized with "null"
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(storedToken? storedToken : null);
 
@@ -35,13 +33,12 @@ export const MainView = () => {
 
   // Fix reload debug
   useEffect(() => {
-    // console.log(localStorage.getItem("user"));
     setUser(storedUser);
   }, [localStorage.getItem("user")]);
 
 
   return (
-    <BrowserRouter>
+    <>
       <NavigationBar
         user={storedUser}
         onLoggedOut={() => {
@@ -50,100 +47,101 @@ export const MainView = () => {
           localStorage.clear();
         }}
       />
-       <Row className="justify-content-md-center">
-        <Routes>
-          <Route
-            path="/signup"
-            element={
-              <>
-                {storedUser ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={5}>
-                    <SignupView />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <>
-                {storedUser ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={5}>
-                    <LoginView
-                      onLoggedIn={
-                        (user, token) => {setUser(user); setToken(token)}
-                      }
-                    />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/users/:username"
-            element={
-              <>
-                {!storedUser ? (
-                  <Navigate to="/login" replace />
-                ) : (
-                  <Col md={6}>
-                    <ProfileView user={user} movies={movies} token={storedToken} setUser={setUser}
-                    />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/movies/:movieTitle"
-            element={
-              <>
-                {!storedUser ? (
-                  <Navigate to="/login" replace /> // MainView for unauthenticated users displays only the LoginView. If there is no user, <Route> component will redirect traffic to the login page.
-                ) : movies.length === 0 ? (
-                  <Col>There are no movies!</Col>
-                ) : (
-                  <Col md={8}>
-                    <MovieView movies={movies} token={token} user={user} setUser={setUser} />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <>
-                {!storedUser ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
-                ) : (
-                  <>
-                    <Row className="welcome-message">
-                      <h1 className="h1 mb-5" >Welcome to MovieFetcher! 🎬</h1>
-                      <p>We are happy to have you on board. Feel free to discover hidden gems!</p>
-                      <p>Happy exploring and enjoy the show! 🍿✨</p>
-                    </Row>
-                    <Row>
-                      {movies.map((movie) => (
-                        <Col className="mb-5" key={movie._id} md={3}>
-                          <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
-                        </Col>
-                      ))}
-                    </Row>
-                  </>
-                )}
-              </>
-            }
-          />
-        </Routes>
-      </Row>
-    </BrowserRouter>
+      <Container>
+        <Row className="justify-content-md-center">
+          <Routes>
+            <Route
+              path="/signup"
+              element={
+                <>
+                  {storedUser ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={5}>
+                      <SignupView />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                  {storedUser ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={5}>
+                      <LoginView
+                        onLoggedIn={
+                          (user, token) => {setUser(user); setToken(token)}
+                        }
+                      />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/users/:username"
+              element={
+                <>
+                  {!storedUser ? (
+                    <Navigate to="/login" replace />
+                  ) : (
+                    <Col md={6}>
+                      <ProfileView user={user} movies={movies} token={storedToken} setUser={setUser} />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/movies/:movieTitle"
+              element={
+                <>
+                  {!storedUser ? (
+                    <Navigate to="/login" replace /> 
+                  ) : movies.length === 0 ? (
+                    <Col>There are no movies!</Col>
+                  ) : (
+                    <Col md={8}>
+                      <MovieView movies={movies} token={token} user={user} setUser={setUser} />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  {!storedUser ? (
+                    <Navigate to="/login" replace />
+                  ) : movies.length === 0 ? (
+                    <Col>The list is empty!</Col>
+                  ) : (
+                    <>
+                      <Row className="welcome-message">
+                        <h1 className="h1 mb-5" >Welcome to MovieFetcher! 🎬</h1>
+                        <p>We are happy to have you on board. Feel free to discover hidden gems!</p>
+                        <p>Happy exploring and enjoy the show! 🍿✨</p>
+                      </Row>
+                      <Row>
+                        {movies.map((movie) => (
+                          <Col className="mb-5" key={movie._id} md={3}>
+                            <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
+                          </Col>
+                        ))}
+                      </Row>
+                    </>
+                  )}
+                </>
+              }
+            />
+          </Routes>
+        </Row>
+      </Container>
+    </>
   );
 };
