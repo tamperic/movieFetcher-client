@@ -29,7 +29,7 @@ export const LoginView = ({onLoggedIn}) => {
     })
     .then((response) => response.json()) // Transforms the response content into a JSON object that code can use to extract the JWT sent by MovieFetcher API
     .then((data) => {
-      console.log("Login response: ", data);
+      // console.log("Login response: ", data);
       if (data.user) {
         // After successful login, the user object and token will be  stored using localStorage
         localStorage.setItem("user", JSON.stringify(data.user));
