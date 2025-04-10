@@ -11,19 +11,17 @@ export const MovieCard = ({ user, setUser, movie, token }) => {
 
 
   useEffect(() => {
-    // Check if "favoriteMovies" is saved in localStorage, if there are they'll load into "favoriteMovies" state
-    const storedFavorites = JSON.parse(localStorage.getItem('favoriteMovies'));
-    if (storedFavorites) {
-      setFavoriteMovies(storedFavorites);
+    // Update local component state (favoriteMovies) whenever "user" prop changes
+    if (user?.favoriteMovies) {
+      setFavoriteMovies(user?.favoriteMovies);
     }
-  }, []);
+  }, [user]);
 
 
   // Handle favorite movie toggle
   const toggleFavoriteMovie = (movieId) => {
     if (!token) return;  // If no token is available, don't proceed with the fetch
     
-   // Update the favorites on the backend
     fetch(
       `https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${user?.username}/movies/${movieId}`,
       {
@@ -35,13 +33,10 @@ export const MovieCard = ({ user, setUser, movie, token }) => {
     )
     .then((response) => response.json())
     .then((updatedUser) => {
-      // setUser({ ...updatedUser, favoriteMovies: updatedUser.favoriteMovies }); // Once the request is successful, update the user object in the local state
-      
       const updatedFavorites = updatedUser.favoriteMovies; 
       setFavoriteMovies(updatedFavorites); // Update the favorites in local state
-      // localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));  // Update the user in localStorage as well
-      setUser({ ...updatedUser, favoriteMovies: updatedFavorites }); // Update the user object in the parent component
-      localStorage.setItem("user", JSON.stringify(user));
+      setUser(updatedUser); // Update the user object in the parent component
+      localStorage.setItem("user", JSON.stringify(updatedUser));
     }).catch((error) => {
       console.log("Updating the list of favorites failed:", error);
       alert(error.message); // Alert the user if there is an error

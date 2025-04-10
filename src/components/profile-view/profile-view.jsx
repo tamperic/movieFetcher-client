@@ -31,10 +31,10 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
-      .then((user) => {
-        if (user) {
-          setUserForm(user); // Update the state of the user
-          let filteredFavoriteMovies = movies.filter(m => user.favoriteMovies?.includes(m._id));
+      .then((resUser) => {
+        if (resUser) {
+          setUserForm(resUser); // Update the state of the user
+          let filteredFavoriteMovies = movies.filter(m => resUser.favoriteMovies?.includes(m._id));
           setFavoriteMovies(filteredFavoriteMovies);
         } else {
           alert("User not found.");
@@ -58,9 +58,9 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       },
     })
       .then((response) => response.json())
-      .then(() => {
+      .then((resUser) => {
         alert("You have successfully edited your profile!");
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(resUser));
       })
       .catch((error) => {
         console.log("Error updating user data: ", error);
@@ -94,7 +94,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
         alert(`Deleting your profile failed: ${error.message}`);
       });
     };
-  }
+  };
 
   if (!user || !userForm?.username) {
     return <p>Loading profile...</p>;
@@ -116,7 +116,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
             </div>
             <div className="mb-5">
               <h4>Date of birth:</h4>
-              <p>{userForm.birthDate}</p>
+              <p>{userForm.birthDate.split("T")[0]}</p>
             </div>
             <Button className="me-4" variant="secondary" onClick={() => setIsEditing(true)}>Edit profile</Button>
             <Button variant="danger" onClick={handleDeleteAccount}>Delete account</Button>
@@ -130,7 +130,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
                 ) : (
                   favoriteMovies?.map((movie) => (
                     <Col className="mb-5" md={6} key={movie._id}>
-                      <MovieCard movie={movie} />
+                      <MovieCard movie={movie} user={userForm} token={token} setUser={setUser} />
                     </Col>
                   ))
                 )
@@ -183,7 +183,7 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
               <Form.Control
                 type="date"
                 name="birthDate"
-                value={userForm?.birthDate}
+                value={userForm?.birthDate.split("T")[0]}
                 onChange={(e) => handleChange(e)}
                 required
               />

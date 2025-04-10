@@ -48,7 +48,7 @@ export const MovieView = ({ movies, user, token, setUser }) => {
     .then((response) => response.json())
     .then((updatedUser) => {
       setIsFavorite((prev) => !prev);
-      setUser({ ...updatedUser, favoriteMovies: updatedUser.favoriteMovies }); // Once the request is successful, update the user object in the local state
+      setUser(updatedUser); // Once the request is successful, update the user object in the local state
       localStorage.setItem("user", JSON.stringify(updatedUser));
     }).catch((error) => {
       console.log("Updating the list of favorites failed:", error);
@@ -95,7 +95,7 @@ export const MovieView = ({ movies, user, token, setUser }) => {
           </div>
           <div className='mb-3'>
             <span><strong>Actors: </strong></span>
-            <span>{movie?.actors}</span>
+            <span>{movie?.actors.join(", ")}</span>
           </div>
           <div>
             <Link to={`/`}>
@@ -118,7 +118,7 @@ export const MovieView = ({ movies, user, token, setUser }) => {
               <Row className="d-flex justify-content-center">
                 {similarMovies.map((similarMovie) => (
                   <Col key={similarMovie._id} md={8}>
-                    <MovieCard movie={similarMovie} />
+                    <MovieCard movie={similarMovie} user={user} token={token} setUser={setUser} />
                   </Col>
                 ))}
               </Row>
