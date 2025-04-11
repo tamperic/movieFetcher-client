@@ -7,7 +7,6 @@ import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container, Col, Row } from "react-bootstrap";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -16,6 +15,7 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken? storedToken : null);
 
   const [movies, setMovies] = useState([]);
+  const [searchMovie, setSearchMovie] = useState("");
 
   // Fetch movies
   useEffect(() => {
@@ -36,6 +36,13 @@ export const MainView = () => {
     setUser(storedUser);
   }, [localStorage.getItem("user")]);
 
+
+  // Handle search movie by title
+  const filteredTitles = movies.filter((m) => 
+    m.title.toLowerCase().includes(searchMovie.toLowerCase()) ||
+    m.genre.name.toLowerCase().includes(searchMovie.toLowerCase()) ||
+    m.director.name.toLowerCase().includes(searchMovie.toLowerCase())
+  );
 
   return (
     <>
@@ -118,8 +125,6 @@ export const MainView = () => {
                 <>
                   {!storedUser ? (
                     <Navigate to="/login" replace />
-                  ) : movies.length === 0 ? (
-                    <Col>The list is empty!</Col>
                   ) : (
                     <>
                       <Row className="welcome-message">
@@ -127,11 +132,26 @@ export const MainView = () => {
                         <p>We are happy to have you on board. Feel free to discover hidden gems!</p>
                         <p>Happy exploring and enjoy the show! 🍿✨</p>
                       </Row>
+                      <Row className="mb-4">
+                        <Col className="input-wrapper">
+                          <input
+                            type="text"
+                            placeholder="Search movies by title, ganre or director..."
+                            className="form-control"
+                            value={searchMovie}
+                            onChange={(e) => setSearchMovie(e.target.value)}
+                          />
+                        </Col>
+                      </Row> 
                       <Row>
-                        {movies.map((movie) => (
-                          <Col className="mb-5" key={movie._id} md={3}>
-                            <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
-                          </Col>
+                        {filteredTitles.length === 0 ? (
+                          <Col>The list is empty!</Col>
+                        ) : (
+                          filteredTitles.map((movie) => (
+                            <Col className="mb-5" key={movie._id} md={3}>
+                              <MovieCard movie={movie} user={user} setUser={setUser} token={token}/>
+                            </Col>
+                          )
                         ))}
                       </Row>
                     </>
