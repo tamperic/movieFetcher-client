@@ -34100,6 +34100,7 @@ const NavigationBar = ({ user, onLoggedOut })=>{
         expand: "lg",
         className: "w-100 mb-4",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
+            className: "custom-navbar-collapse",
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Navbar).Brand, {
                     as: (0, _reactRouterDom.Link),

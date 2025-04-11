@@ -38138,7 +38138,11 @@ body {
 
 .navbar {
   background-color: #e6e6fa;
-  height: 60px;
+}
+
+.navbar .custom-navbar-collapse {
+  background-color: #e6e6fa;
+  width: 100%;
 }
 
 .navbar .nav-link {
@@ -38149,6 +38153,10 @@ body {
 .navbar .nav-link:hover, .navbar .nav-link:focus {
   color: #000;
   font-weight: 500;
+}
+
+.custom-navbar-collapse .nav-link {
+  background-color: #e6e6fa !important;
 }
 
 .welcome-message {
