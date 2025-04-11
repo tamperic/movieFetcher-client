@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router";
 
@@ -97,7 +97,11 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
   };
 
   if (!user || !userForm?.username) {
-    return <p>Loading profile...</p>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading profile...</span>
+      </Spinner>
+    );
   } // Avoid error if the data isn't ready, before rendering the profile
 
   return (
