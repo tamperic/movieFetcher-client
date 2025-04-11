@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+import "./login-view.scss";
 
 export const LoginView = ({onLoggedIn}) => {
   const [username, setUsername] = useState("");
@@ -23,9 +27,9 @@ export const LoginView = ({onLoggedIn}) => {
       },
       body: JSON.stringify(data)
     })
-    .then((response) => response.json()) // Transforms the response conent into a JSON object that code can use to extract the JWTsent by MovieFetcher API
+    .then((response) => response.json()) // Transforms the response content into a JSON object that code can use to extract the JWT sent by MovieFetcher API
     .then((data) => {
-      console.log("Login response: ", data);
+      // console.log("Login response: ", data);
       if (data.user) {
         // After successful login, the user object and token will be  stored using localStorage
         localStorage.setItem("user", JSON.stringify(data.user));
@@ -42,34 +46,45 @@ export const LoginView = ({onLoggedIn}) => {
 
   // onSubmit tells the login API to validate username & password
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control 
-          type="text" 
-          value={username} 
-          minLength="3" 
-          onChange={(e) => setUsername(e.target.value)} 
-          placeholder="Enter your username"
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control 
-          type="password" 
-          value={password}
-          minLength="8"
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Enter your password"
-          required
-        />
-      </Form.Group>
-      <Button variant="primary" className="mb-4" type="submit">Submit</Button>
-    </Form>
+    <Row>
+      <Col className="mt-5">
+        <Form className="mb-5" onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formUsername">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control 
+              type="text" 
+              value={username} 
+              minLength="3" 
+              onChange={(e) => setUsername(e.target.value)} 
+              placeholder="Enter your username"
+              required
+            />
+            <Form.Text>Your username must contain at least 5 characters.</Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-4" controlId="formPassword">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control 
+              type="password" 
+              value={password}
+              minLength="8"
+              onChange={(e) => setPassword(e.target.value)} 
+              placeholder="Enter your password"
+              required
+            />
+            <Form.Text>Your password must contain at least 8 characters.</Form.Text>
+          </Form.Group>
+          <Button className="submit-btn mb-4" type="submit">Submit</Button>
+        </Form>
+      </Col>
+    </Row>
   )
 };
 
 LoginView.propTypes = {
-  onLoggedIn: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    birthDate: PropTypes.instanceOf(Date),
+  }).isRequired
 };

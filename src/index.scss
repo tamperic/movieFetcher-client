@@ -1,9 +1,90 @@
-$primary: DarkSlateBlue;
-$body-bg: Lavender;
+// Body background
+$body-bg: #483d8b;
+
+// Buttons
+$primary: #483d8b;
+$secondary: #C4C4D9;
+$tertiary: #e6e6fa;
+
+// Colors
+$white: #f9f9f9;
+$black: #181818;
+
+// Input form background
 $input-bg: white;
 
-.Form.Control {
-  background-color: $input-bg;
-}
+// Text 
+$text-color-light: #f9f9f9;
+$text-color-dark: #181818;
+$normal: 400;
+$bold: 500;
+$bolder: 800;
+
 
 @import "~bootstrap/scss/bootstrap.scss";
+
+body {
+  text-align: left;
+  color: $text-color-light;
+}
+
+.navbar {
+  height: 60px;
+  background-color: $tertiary;
+  .nav-link {
+    color: $text-color-dark;
+    opacity: 0.8;
+    &:hover, &:focus {
+      color: #000000;
+      font-weight: $bold;
+    }
+  }
+}
+
+.welcome-message {
+  text-align: center;
+  margin: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  .h1 {
+    font-weight: $bolder;
+  }
+}
+
+.card {
+	background-color: $tertiary;
+  color: $text-color-dark;
+  text-align: left;
+  border: none;
+  box-shadow: 10px 10px 5px  rgba($black, 0.55);
+  .fav-movie-btn {
+    padding: 5px 8px;
+  }
+  .open-btn {
+    width: 100%; 
+    text-align: center; 
+    padding: 6px auto;
+    box-shadow: 2px 2px 5px  rgba($black, 0.55);
+  };
+}
+
+.btn-isFav {
+  background-color: #9999B8;
+  color: $text-color-dark;
+  border: none;
+  box-shadow: 1px 1px 3px  rgba($black, 0.25);
+  &:hover, &:focus {
+    background-color: #7F7FB0;
+    color: $text-color-dark;
+  }
+}
+
+.btn-notFav {
+  background-color: #ecb829;
+  color: $text-color-dark;
+  border: none;
+  box-shadow: 1px 1px 3px  rgba($black, 0.25);
+  &:hover, &:focus {
+    background-color: #d7a825;
+    color: $text-color-dark;
+  }
+}

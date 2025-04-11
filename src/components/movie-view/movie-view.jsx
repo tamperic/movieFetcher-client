@@ -1,49 +1,131 @@
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
+import { MovieCard } from '../movie-card/movie-card';
 
 import "./movie-view.scss";
 
-export const MovieView = ({movie, onBackClick}) => {
+export const MovieView = ({ movies, user, token, setUser }) => {
+  const { movieTitle } = useParams();
+  const [ movie, setMovie ] = useState(null);
+  const [ isFavorite, setIsFavorite ] = useState(false);
+  const [ similarMovies, setSimilarMovies ] = useState([]);
+
+
+  // Fetch movies by title, handle similar movies
+  useEffect(() => {
+    if (!token) return;  // If no token is available, don't proceed with the fetch
+
+    fetch(`https://movie-fetcher-5a8669cd2c54.herokuapp.com/movies/${movieTitle}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((response) => response.json())
+    .then((resMovie) => {
+      setMovie(resMovie);
+      setIsFavorite(user.favoriteMovies.includes(resMovie._id));
+      setSimilarMovies(movies.filter((m) =>
+        m.genre.name === resMovie.genre.name && 
+        resMovie._id !== m._id)
+      );
+    });
+  }, [movieTitle, token]);
+
+
+  // Handle favorite movie toggle
+  const toggleFavoriteMovie = (movieId) => {
+
+    fetch(
+      `https://movie-fetcher-5a8669cd2c54.herokuapp.com/users/${user?.username}/movies/${movieId}`,
+      {
+        method: isFavorite ? "DELETE" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    )
+    .then((response) => response.json())
+    .then((updatedUser) => {
+      setIsFavorite((prev) => !prev);
+      setUser(updatedUser); // Once the request is successful, update the user object in the local state
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    }).catch((error) => {
+      console.log("Updating the list of favorites failed:", error);
+      alert(error.message); // Alert the user if there is an error
+    });
+  };
+
+
   return (
-    <div>
-      <div>
-        <img className='w-100' src={movie.imagePath} />
-      </div>
-      <div>
-        <h1>Title: </h1>
-        <p>{movie.title}</p>
-      </div>
-      <div>
-        <h3>Description: </h3>
-        <p>{movie.description}</p>
-      </div>
-      <div>
-        <h3>Genre: </h3>
-        <p>{movie.genre.name}</p>
-      </div>
-      <div>
-        <h3>Director: </h3>
-        <p>{movie.director.name}</p>
-      </div>
-      <div>
-        <h3>Rating: </h3>
-        <p>{movie.rating}</p>
-      </div>
-      <div>
-        <h3>Year of release: </h3>
-        <p>{movie.releaseYear}</p>
-      </div>
-      <div>
-        <h3>Duration: </h3>
-        <p>{movie.duration}</p>
-      </div>
-      <div>
-        <h3>Actors: </h3>
-        <p>{movie.actors}</p>
-      </div>
-      <Button onClick={onBackClick} className='back-button' style={{ cursor: "pointer" }}>Back</Button>
-    </div>
+    <Row className='movie-view-container'>
+      <Row className='movie-details mt-5 mb-5'>
+        <Row>
+          <div>
+            <img className='movie-img mb-4' src={movie?.imagePath} />
+          </div>
+        </Row>
+        <Row>
+          <div className='mb-4'>
+            <h1>{movie?.title}</h1>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Description: </strong></span>
+            <span>{movie?.description}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Genre: </strong></span>
+            <span>{movie?.genre?.name}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Director: </strong></span>
+            <span>{movie?.director?.name}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Rating: </strong></span>
+            <span>{movie?.rating}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Year of release: </strong></span>
+            <span>{movie?.releaseYear}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Duration: </strong></span>
+            <span>{movie?.duration}</span>
+          </div>
+          <div className='mb-3'>
+            <span><strong>Actors: </strong></span>
+            <span>{movie?.actors.join(", ")}</span>
+          </div>
+          <div>
+            <Link to={`/`}>
+              <Button className="back-btn">Back</Button>
+            </Link>
+            <Button className="fav-movie-btn" variant={isFavorite ? "isFav" : "notFav"} onClick={() => toggleFavoriteMovie(movie._id)}>{
+              isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            </Button>
+          </div>
+        </Row>
+      </Row>
+      <hr />
+      <Row className='similar-movies mt-5 mb-5 d-flex justify-content-center align-items-center'>
+        <Col md={6}>
+          <h2 className='mb-3'>Similar movies</h2>
+          <p className='mb-5'><em>Looking for more movies like this? ✨<br/> Explore similar titles by genre and discover your next favorite! 🚀</em></p>
+          {similarMovies.length === 0 ? (
+              <p>(There are no similar movies.)</p>
+            ) : (
+              <Row className="d-flex justify-content-center">
+                {similarMovies.map((similarMovie) => (
+                  <Col key={similarMovie._id} md={8}>
+                    <MovieCard movie={similarMovie} user={user} token={token} setUser={setUser} />
+                  </Col>
+                ))}
+              </Row>
+            )}
+        </Col>
+      </Row>
+    </Row>
   );
 };
 
@@ -68,6 +150,5 @@ MovieView.propTypes = {
     imagePath: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
     featured: PropTypes.bool.isRequired
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
+  }).isRequired
 };
