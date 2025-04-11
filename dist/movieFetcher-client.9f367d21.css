@@ -38161,6 +38161,27 @@ body {
   font-weight: 800;
 }
 
+.form-control {
+  background-color: #e6e6fa;
+  border: none;
+  width: 100%;
+  height: 2rem;
+  margin-left: 5px;
+  padding: 0 15px;
+  font-size: 1rem;
+  box-shadow: 0 0 3px #ddd;
+}
+
+.form-control:focus {
+  background-color: #e6e6fa;
+  border: none;
+  outline: none;
+}
+
+#search-icon {
+  color: #4169e1;
+}
+
 .card {
   color: #181818;
   text-align: left;
