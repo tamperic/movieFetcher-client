@@ -29,8 +29,11 @@ body {
 }
 
 .navbar {
-  height: 60px;
   background-color: $tertiary;
+  .custom-navbar-collapse {
+    background-color: $tertiary;
+    width: 100%;
+  }
   .nav-link {
     color: $text-color-dark;
     opacity: 0.8;
@@ -39,6 +42,9 @@ body {
       font-weight: $bold;
     }
   }
+}
+.custom-navbar-collapse .nav-link  {
+  background-color: $tertiary !important;
 }
 
 .welcome-message {
