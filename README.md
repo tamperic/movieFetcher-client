@@ -8,6 +8,7 @@ As a user, you will be able to:
 - ✅ **Sign Up** – Create an account to start using MovieFetcher.
 - 🔐 **Log In** – Securely log in to access all app features.
 - 🎞️ **Browse Movies** – View a list of all available movies.
+- 🔍 **Search Bar** - Possibility to search movies by title, genre or director's name.
 - 📄 **Movie Details** – Click on certain movie card to view:
   - Title, Description
   - Genre & Director info
@@ -26,7 +27,7 @@ As a user, you will be able to:
 
 The app is built using modular and reusable React components:
 
-- **MainView** – Displays the full list of movies after login.
+- **MainView** – Displays the full list of movies after login, allows users to search movies.
 - **MovieView** – Shows details about a selected movie, including similar movies.
 - **MovieCard** – A card-style component representing individual movies.
 - **LoginView** – Allows users to log in.

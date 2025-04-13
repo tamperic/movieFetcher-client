@@ -38138,7 +38138,11 @@ body {
 
 .navbar {
   background-color: #e6e6fa;
-  height: 60px;
+}
+
+.navbar .custom-navbar-collapse {
+  background-color: #e6e6fa;
+  width: 100%;
 }
 
 .navbar .nav-link {
@@ -38151,6 +38155,10 @@ body {
   font-weight: 500;
 }
 
+.custom-navbar-collapse .nav-link {
+  background-color: #e6e6fa !important;
+}
+
 .welcome-message {
   text-align: center;
   margin: 50px;
@@ -38159,6 +38167,27 @@ body {
 
 .welcome-message .h1 {
   font-weight: 800;
+}
+
+.form-control {
+  background-color: #e6e6fa;
+  border: none;
+  width: 100%;
+  height: 2rem;
+  margin-left: 5px;
+  padding: 0 15px;
+  font-size: 1rem;
+  box-shadow: 0 0 3px #ddd;
+}
+
+.form-control:focus {
+  background-color: #e6e6fa;
+  border: none;
+  outline: none;
+}
+
+#search-icon {
+  color: #4169e1;
 }
 
 .card {

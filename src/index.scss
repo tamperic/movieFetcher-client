@@ -29,8 +29,11 @@ body {
 }
 
 .navbar {
-  height: 60px;
   background-color: $tertiary;
+  .custom-navbar-collapse {
+    background-color: $tertiary;
+    width: 100%;
+  }
   .nav-link {
     color: $text-color-dark;
     opacity: 0.8;
@@ -40,6 +43,9 @@ body {
     }
   }
 }
+.custom-navbar-collapse .nav-link  {
+  background-color: $tertiary !important;
+}
 
 .welcome-message {
   text-align: center;
@@ -48,6 +54,27 @@ body {
   .h1 {
     font-weight: $bolder;
   }
+}
+
+.form-control {
+  background-color: $tertiary;
+  border: none;
+  font-size: 1rem;
+  height: 2rem;
+  width: 100%;
+  padding: 0 15px;
+  margin-left: 5px;
+  box-shadow: 0px 0px 3px #ddd;
+}
+
+.form-control:focus {
+  border: none;
+  outline: none;
+  background-color: $tertiary;
+}
+
+#search-icon {
+  color: royalblue;
 }
 
 .card {
