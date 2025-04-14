@@ -60,7 +60,8 @@ export const ProfileView = ({ user, token , setUser, movies }) => {
       .then((response) => response.json())
       .then((resUser) => {
         alert("You have successfully edited your profile!");
-        localStorage.setItem("user", JSON.stringify(resUser));
+        localStorage.setItem("user", JSON.stringify(resUser)); 
+        setUser(resUser); 
       })
       .catch((error) => {
         console.log("Error updating user data: ", error);
