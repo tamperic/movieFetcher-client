@@ -44,4 +44,4 @@ The app is built using modular and reusable React components:
 
 ## 🔗 Live Demo 
 
-Here is the [MovieFetcher] (https://movie-fetcher-client.netlify.app/login) live demo.
+Here is the [MovieFetcher](https://movie-fetcher-client.netlify.app/login) live demo.
