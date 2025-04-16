@@ -41,3 +41,7 @@ The app is built using modular and reusable React components:
 - **React-Bootstrap** a popular frontend framework that provides a responsive and consistent UI
 - **Parcel** bundler a build tool for faster performance during development process
 - **Prop-Types** a runtime type checking for React props
+
+## 🔗 Live Demo 
+
+Here is the [MovieFetcher] (https://movie-fetcher-client.netlify.app/login) live demo.
