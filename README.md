@@ -1,6 +1,11 @@
-# 🎬 MovieFetcher App 
+# 🎬 MovieFetcher-React-client App
 
-**MovieFetcher** is a client-side single page application (SPA) built with **React** that allows users to explore a wide selection of movies and interact with a RESTful API backend. It uses a component-based architecture to create a dynamic user experience.
+## Project description
+
+**MovieFetcher-React-client** is a client-side single page application (SPA) built with **React** that allows users to explore a wide selection of movies and interact with a RESTful API backend. It uses a component-based architecture to create a dynamic user experience.
+
+___
+
 
 ## 🚀 Features 
 
@@ -23,6 +28,9 @@ As a user, you will be able to:
   - View and manage your list of favorite movies
 - 🔓 **Log Out** – Securely log out of your account.
 
+___
+
+
 ## 🧱 Components / Views
 
 The app is built using modular and reusable React components:
@@ -34,14 +42,44 @@ The app is built using modular and reusable React components:
 - **SignupView** – Allows new users to register.
 - **ProfileView** – Displays and manages user account details and favorite movies.
 
-## 🛠️ Technologies Used
+___
+
+## Geting Started
+
+### Prerequisites
+
+Install dependencies `npm install`.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/tamperic/movieFetcher-client.git
+   
+2. Navigate to the project:
+    ```bash
+    cd movieFetcher-client
+
+3. 3. Run the following command to start the server:
+    ```bash
+    npm start
+
+4. Open the app in browser at localhost.
+
+___
+
+## 🛠️ Technologies Used
 
 - **React.js** a JS library for building user interfaces
 - **React-router** (a state-based) library for routing between multiple views
 - **React-Bootstrap** a popular frontend framework that provides a responsive and consistent UI
 - **Parcel** bundler a build tool for faster performance during development process
 - **Prop-Types** a runtime type checking for React props
+- Hosted on **Netlify**.
 
-## 🔗 Live Demo 
+___
 
-Here is the [MovieFetcher](https://movie-fetcher-client.netlify.app/login) live demo.
+## 🔗 Live Demo 
+
+Check out the **MovieFetcher-React-client** app deployed on Netlify: <br/>
+[MovieFetcher Live Demo](https://movie-fetcher-client.netlify.app/login)
